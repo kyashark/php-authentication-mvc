@@ -11,7 +11,10 @@ class UserController extends Controller {
         $this->view('user/home', ['username' => $username]);
     }
 
+    
     public function index() {
+        Session::redirectIfLoggedIn();
         $this->view('index');
     }
 }
+
