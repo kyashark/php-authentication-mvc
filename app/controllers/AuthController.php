@@ -80,33 +80,33 @@ class AuthController extends Controller {
 
         // Validate username
         if (empty($username)) {
-            $errors['username'] = "Username is required.";
+            $errors['username'] = "Username is required";
         } elseif (strlen($username) < 3) {
-            $errors['username'] = "Username must be at least 3 characters.";
+            $errors['username'] = "Username must be at least 3 characters";
         }
 
         // Validate email
         if (empty($email)) {
-            $errors['email'] = "Email is required.";
+            $errors['email'] = "Email is required";
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = "Invalid email address.";
+            $errors['email'] = "Invalid email address";
         } elseif ($this->userModel->emailExists($email)) {
-            $errors['email'] = "This email is already in use.";
+            $errors['email'] = "This email is already in use";
         }
 
         // Validate password
         if (empty($password)) {
             $errors['password'] = "Password is required.";
         } elseif (strlen($password) < 8) {
-            $errors['password'] = "Password must be at least 8 characters long.";
+            $errors['password'] = "Password must be at least 8 characters long";
         } elseif (!preg_match("/[A-Z]/", $password)) {
-            $errors['password'] = "Password must contain at least one uppercase letter.";
+            $errors['password'] = "Password must contain at least one uppercase letter";
         } elseif (!preg_match("/[a-z]/", $password)) {
-            $errors['password'] = "Password must contain at least one lowercase letter.";
+            $errors['password'] = "Password must contain at least one lowercase letter";
         } elseif (!preg_match("/[0-9]/", $password)) {
-            $errors['password'] = "Password must contain at least one number.";
+            $errors['password'] = "Password must contain at least one number";
         } elseif (!preg_match("/[!@#$%^&*(),.?\":{}|<>]/", $password)) {
-            $errors['password'] = "Password must contain at least one special character.";
+            $errors['password'] = "Password must contain at least one special character";
         }
 
         // Confirm password

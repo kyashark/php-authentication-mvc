@@ -81,6 +81,7 @@ form span {
 }
 
 .error-msg {
+     color: #f52e42a9;
     transition: opacity 0.5s ease-out;
 }
 
