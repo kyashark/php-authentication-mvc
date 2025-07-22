@@ -12,9 +12,9 @@ class AuthController extends Controller {
     }
 
     // Show login page
-    public function loginPage() {
-        $this->view("auth/login");
-    }
+    // public function loginPage() {
+    //     $this->view("auth/login");
+    // }
 
     // Show registration page
     public function registerPage() {
@@ -23,48 +23,96 @@ class AuthController extends Controller {
 
 
     // Handle login request
+    // public function login() {
+
+    //     $errors = [
+    //         'username' => '',
+    //         'password' => '',
+    //         'credentials' => ''
+    //     ];
+
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         $username = htmlspecialchars(trim($_POST['username']));
+    //         $password = trim($_POST['password']);
+
+    //         if (empty($username)) {
+    //             $errors['username'] = "Username is required.";
+    //         }
+
+    //         if (empty($password)) {
+    //             $errors['password'] = "Password is required.";
+    //         }
+
+    //         if (empty($errors)) {
+            
+    //             $user = $this->userModel->login($username, $password);
+
+    //             if ($user) {
+    //              Session::start();
+    //              Session::set('user_id', $user['id']);
+    //              Session::set('username', $user['username']);
+
+    //                 $rolesRaw = $this->userModel->getRoles($user['id']);
+    //                 $roles = array_column($rolesRaw, 'name'); // this is key
+    //                 Session::set('roles', $roles);
+                    
+    //                 Session::redirectIfLoggedIn();
+                 
+    //             } else {
+    //                $errors['credentials'] = 'Invalid username or password';
+    //             }
+    //         }
+
+    //         $this->view('auth/login', ['errors' => $errors]);
+
+    //     } else {
+    //         $this->view('auth/login');
+    //     }
+    // }
+
     public function login() {
 
-        $errors = [];
+    $errors = [];
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = htmlspecialchars(trim($_POST['username']));
-            $password = trim($_POST['password']);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = htmlspecialchars(trim($_POST['username']));
+        $password = trim($_POST['password']);
 
-            if (empty($username)) {
-                $errors[] = "Username is required";
-            }
-
-            if (empty($password)) {
-                $errors[] = "Password is required";
-            }
-
-            if (empty($errors)) {
-            
-                $user = $this->userModel->login($username, $password);
-
-                if ($user) {
-                 Session::start();
-                 Session::set('user_id', $user['id']);
-                 Session::set('username', $user['username']);
-
-                    $rolesRaw = $this->userModel->getRoles($user['id']);
-                    $roles = array_column($rolesRaw, 'name'); // this is key
-                    Session::set('roles', $roles);
-                    
-                    Session::redirectIfLoggedIn();
-                 
-                } else {
-                    $errors[] = 'Invalid username or password';
-                }
-            }
-
-            $this->view('auth/login', ['errors' => $errors]);
-
-        } else {
-            $this->view('auth/login');
+        if (empty($username)) {
+            $errors['username'] = "Username is required.";
         }
+
+        if (empty($password)) {
+            $errors['password'] = "Password is required.";
+        }
+
+        // Only proceed with authentication if no validation errors
+        if (empty($errors)) {
+            $user = $this->userModel->login($username, $password);
+
+            if ($user) {
+                Session::start();
+                Session::set('user_id', $user['id']);
+                Session::set('username', $user['username']);
+
+                $rolesRaw = $this->userModel->getRoles($user['id']);
+                $roles = array_column($rolesRaw, 'name');
+                Session::set('roles', $roles);
+                
+                Session::redirectIfLoggedIn();
+                return; // Important: return here to prevent showing the view
+             
+            } else {
+               $errors['credentials'] = 'Invalid username or password';
+            }
+        }
+
+        $this->view('auth/login', ['errors' => $errors]);
+
+    } else {
+        $this->view('auth/login');
     }
+}
 
     // Handle register request
     public function register() {

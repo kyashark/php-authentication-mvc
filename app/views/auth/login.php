@@ -12,23 +12,25 @@
         <form method="POST" action="<?= BASE_URL ?>/Auth/login">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" >
+                                <span class="error-msg">
+                        <?php echo $errors['username'] ?? ''; ?>
+                    </span>
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password">
+                     <span class="error-msg">
+                        <?php echo $errors['password'] ?? ''; ?>
+                    </span>
 
-            <span class="error-text">
-            <?php 
-                if (!empty($errors)) {
-                        foreach ($errors as $error) {
-                        echo "<p>$error</p>";
-                    }
-                }
-            ?>
-            </span>
+           <span class="error-msg">
+    <?php echo $errors['credentials'] ?? ''; ?>
+</span>
 
             <button type="submit">Login</button>
         </form>
         <h5>You didn't have an account ? <a href="<?= BASE_URL ?>/Auth/registerPage">Register<a></h5>
     </div>
+
+    <script src="<?= BASE_URL ?>/js/script.js"></script>
 </body>
 </html>
