@@ -1,4 +1,4 @@
-*{
+* {
     font-family: Arial, sans-serif;
     box-sizing: border-box;
     margin: 0;
@@ -28,7 +28,7 @@ h3 {
     color: #333;
 }
 
-form{
+form {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,20 +70,20 @@ form button:hover {
 }
 
 form span {
-  display: block;
-  align-self: flex-start;
-  height: 20px;
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-  font-weight: 500;
-  letter-spacing: 0.2;
-  color: #eb293ca9;
+    display: block;
+    align-self: flex-start;
+    height: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+    font-weight: 500;
+    letter-spacing: 0.2;
+    color: #f52e42a9;
 }
 
 .error-msg {
-            transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s ease-out;
 }
-        
+
 .error-msg.fade-out {
-            opacity: 0;
+    opacity: 0;
 }

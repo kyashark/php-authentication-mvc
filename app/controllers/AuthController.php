@@ -12,9 +12,9 @@ class AuthController extends Controller {
     }
 
     // Show login page
-    // public function loginPage() {
-    //     $this->view("auth/login");
-    // }
+    public function loginPage() {
+        $this->view("auth/login");
+    }
 
     // Show registration page
     public function registerPage() {
@@ -23,53 +23,6 @@ class AuthController extends Controller {
 
 
     // Handle login request
-    // public function login() {
-
-    //     $errors = [
-    //         'username' => '',
-    //         'password' => '',
-    //         'credentials' => ''
-    //     ];
-
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         $username = htmlspecialchars(trim($_POST['username']));
-    //         $password = trim($_POST['password']);
-
-    //         if (empty($username)) {
-    //             $errors['username'] = "Username is required.";
-    //         }
-
-    //         if (empty($password)) {
-    //             $errors['password'] = "Password is required.";
-    //         }
-
-    //         if (empty($errors)) {
-            
-    //             $user = $this->userModel->login($username, $password);
-
-    //             if ($user) {
-    //              Session::start();
-    //              Session::set('user_id', $user['id']);
-    //              Session::set('username', $user['username']);
-
-    //                 $rolesRaw = $this->userModel->getRoles($user['id']);
-    //                 $roles = array_column($rolesRaw, 'name'); // this is key
-    //                 Session::set('roles', $roles);
-                    
-    //                 Session::redirectIfLoggedIn();
-                 
-    //             } else {
-    //                $errors['credentials'] = 'Invalid username or password';
-    //             }
-    //         }
-
-    //         $this->view('auth/login', ['errors' => $errors]);
-
-    //     } else {
-    //         $this->view('auth/login');
-    //     }
-    // }
-
     public function login() {
 
     $errors = [];
@@ -100,7 +53,7 @@ class AuthController extends Controller {
                 Session::set('roles', $roles);
                 
                 Session::redirectIfLoggedIn();
-                return; // Important: return here to prevent showing the view
+                return; // return here to prevent showing the view
              
             } else {
                $errors['credentials'] = 'Invalid username or password';
@@ -117,63 +70,77 @@ class AuthController extends Controller {
     // Handle register request
     public function register() {
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = htmlspecialchars(trim($_POST['username']));
-            $email = htmlspecialchars(trim($_POST['email']));
-            $password = trim($_POST['password']);
-            $confirmPassword = trim($_POST['confirm_password']);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = htmlspecialchars(trim($_POST['username']));
+        $email = htmlspecialchars(trim($_POST['email']));
+        $password = trim($_POST['password']);
+        $confirmPassword = trim($_POST['confirm_password']);
 
-            $errors = [];
+        $errors = [];
 
-            // Validate username
-            if (empty($username)) {
-                $errors[] = "Username is required";
-            } elseif (strlen($username) < 3) {
-                $errors[] = "Username must be at least 3 characters.";
-            }
+        // Validate username
+        if (empty($username)) {
+            $errors['username'] = "Username is required.";
+        } elseif (strlen($username) < 3) {
+            $errors['username'] = "Username must be at least 3 characters.";
+        }
 
-            // Validate email
-            if (empty($email)) {
-                $errors[] = "Email is required";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errors[] = "Invalid email address.";
-            } elseif ($this->userModel->emailExists($email)) {
-                $errors[] = "This email is already in use.";
-            }
+        // Validate email
+        if (empty($email)) {
+            $errors['email'] = "Email is required.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = "Invalid email address.";
+        } elseif ($this->userModel->emailExists($email)) {
+            $errors['email'] = "This email is already in use.";
+        }
 
-            // Validate password
-            if (empty($password)) {
-                $errors[] = "Password is required.";
-            } elseif (strlen($password) < 6) {
-                $errors[] = "Password must be at least 6 characters long.";
-            } elseif (!preg_match("/[A-Z]/", $password)) {
-                $errors[] = "Password must contain at least one uppercase letter.";
-            } elseif (!preg_match("/[0-9]/", $password)) {
-                $errors[] = "Password must contain at least one number.";
-            }
+        // Validate password
+        if (empty($password)) {
+            $errors['password'] = "Password is required.";
+        } elseif (strlen($password) < 8) {
+            $errors['password'] = "Password must be at least 8 characters long.";
+        } elseif (!preg_match("/[A-Z]/", $password)) {
+            $errors['password'] = "Password must contain at least one uppercase letter.";
+        } elseif (!preg_match("/[a-z]/", $password)) {
+            $errors['password'] = "Password must contain at least one lowercase letter.";
+        } elseif (!preg_match("/[0-9]/", $password)) {
+            $errors['password'] = "Password must contain at least one number.";
+        } elseif (!preg_match("/[!@#$%^&*(),.?\":{}|<>]/", $password)) {
+            $errors['password'] = "Password must contain at least one special character.";
+        }
 
-            // Confirm password
-            if ($password !== $confirmPassword) {
-                $errors[] = "Passwords do not match.";
-            }
+        // Confirm password
+        if (empty($confirmPassword)) {
+            $errors['confirm_password'] = "Confirm Password is required.";
+        } elseif ($password !== $confirmPassword) {
+            $errors['confirm_password'] = "Passwords do not match.";
+        }
 
-            if (empty($errors)) {
+        if (empty($errors)) {
+            try {
                 if ($this->userModel->register($username, $email, $password)) {
                     $userId = $this->userModel->getLastInsertedId();
-                    $this->userModel->assignRole($userId, 'admin');
-                    header('Location: ' . BASE_URL . '/Auth/loginPage');
+                    
+                    $this->userModel->assignRole($userId, 'user');
+                    
+                    header('Location: ' . BASE_URL . '/Auth/loginPage?registered=1');
                     exit;
                 } else {
-                    $errors[] = "Registration failed. Please try again.";
+                    $errors['registration'] = "Registration failed. Please try again.";
                 }
+            } catch (Exception $e) {
+                // Log the error for debugging
+                error_log("Registration error: " . $e->getMessage());
+                $errors['registration'] = "Registration failed. Please try again.";
             }
-
-            $this->view('auth/register', ['errors' => $errors]);
-
-        } else {
-            $this->view('auth/register');
         }
+
+        $this->view('auth/register', ['errors' => $errors]);
+
+    } else {
+        $this->view('auth/register');
     }
+}
 
     // Logout user
     public function logout() {
