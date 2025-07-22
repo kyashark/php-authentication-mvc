@@ -2,8 +2,8 @@
 
 A simple authentication system built with PHP using a manual MVC structure. Features include:
 
-- User registration and login with password hashing.
-- Role-based access control (Admin/User).
+- User registration and login with password hashing
+- Role-based access control (Admin/User/Editor)
 - Real-time front-end form validation
 - Secure session-based authentication
 
