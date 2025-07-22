@@ -71,14 +71,14 @@ class Session {
             header('Location: ' . BASE_URL . '/admin/dashboard');
             exit;
         } elseif (in_array('editor', $roles)) {
-            header('Location: ' . BASE_URL . '/editor/home');
+            header('Location: ' . BASE_URL . '/user/home');
             exit;
         } elseif (in_array('user', $roles)) {
             header('Location: ' . BASE_URL . '/user/home');
             exit;
         } else {
             self::destroy();
-            header('Location: ' . BASE_URL . '/unauthorized'); // or '/'
+            header('Location: ' . BASE_URL . '/unauthorized');
             exit;
         }
     }

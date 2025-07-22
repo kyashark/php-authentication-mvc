@@ -13,10 +13,10 @@
         <p>We're glad to have you here. Explore our features, check your profile, and more.</p>
         <div class="btn-tab">
         <form method="POST" action="<?= BASE_URL ?>/Auth/loginPage" style="margin-top: 20px;">
-            <button type="submit" class="logout-btn">Login</button>
+            <button type="submit" class="home-btn">Login</button>
         </form>
         <form method="POST" action="<?= BASE_URL ?>/Auth/registerPage" style="margin-top: 20px;">
-            <button type="submit" class="logout-btn">Register</button>
+            <button type="submit" class="home-btn">Register</button>
         </form>
     </div>
     </div>
