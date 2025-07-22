@@ -134,7 +134,7 @@ class AuthController extends Controller {
                 $errors['registration'] = "Registration failed. Please try again.";
             }
         }
-
+        
         $this->view('auth/register', ['errors' => $errors]);
 
     } else {
