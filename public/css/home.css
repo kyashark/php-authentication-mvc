@@ -43,7 +43,7 @@ nav a:hover {
     text-decoration: underline;
 }
 
-.logout-btn {
+.home-btn {
     padding: 10px 20px;
     background-color: #212121;
     border: none;
@@ -54,7 +54,8 @@ nav a:hover {
     margin-top: 20px;
 }
 
-.logout-btn:hover {
+
+.home-btn:hover {
     background-color: #131212;
 }
 
@@ -67,4 +68,13 @@ nav a:hover {
     text-decoration: none;
     color: #0059ff;
     
+}
+
+.edit-btn{
+    background-color: #007BFF;
+}
+
+.edit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }

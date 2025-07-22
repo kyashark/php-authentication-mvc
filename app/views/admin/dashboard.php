@@ -12,7 +12,7 @@
         <h1>Welcome to Admin Dashboard, <?= $username ?>!</h1>
         <p>We're glad to have you here. Explore our features, check your profile, and more.</p>
         <form method="POST" action="<?= BASE_URL ?>/Auth/logout" style="margin-top: 20px;">
-            <button type="submit" class="logout-btn">Logout</button>
+            <button type="submit" class="home-btn">Logout</button>
         </form>
     </div>
 </body>
