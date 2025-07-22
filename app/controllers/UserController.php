@@ -8,7 +8,7 @@ class UserController extends Controller {
     public function home() {
         Session::start();
         $username = Session::get('username');
-        $this->view('home', ['username' => $username]);
+        $this->view('user/home', ['username' => $username]);
     }
 
     
