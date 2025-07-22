@@ -5,7 +5,7 @@ require_once "../core/Session.php";
 class AdminController extends Controller {
     
 public function dashboard() {
-    Session::requireLogin(); // ✅ check login
+    Session::requireLogin();
 
     if (!Session::hasRole('admin')) {
         header('Location: ' . BASE_URL . '/unauthorized');

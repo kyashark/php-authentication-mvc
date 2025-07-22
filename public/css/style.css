@@ -1,4 +1,4 @@
-*{
+* {
     font-family: Arial, sans-serif;
     box-sizing: border-box;
     margin: 0;
@@ -28,7 +28,7 @@ h3 {
     color: #333;
 }
 
-form{
+form {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,7 +46,7 @@ form label {
 form input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 4px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
@@ -62,16 +62,29 @@ form button {
     font-size: 16px;
     cursor: pointer;
     margin-bottom: 5px;
-    margin-top: 7px;
+    margin-top: 3px;
 }
 
 form button:hover {
     background-color: #131212;
 }
 
-.error-text {
-    width: 100%;
-    color: red;
-    font-size: 14px;
-    text-align: left;
+form span {
+    display: block;
+    align-self: flex-start;
+    height: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+    font-weight: 500;
+    letter-spacing: 0.2;
+    color: #f52e42a9;
+}
+
+.error-msg {
+     color: #f52e42a9;
+    transition: opacity 0.5s ease-out;
+}
+
+.error-msg.fade-out {
+    opacity: 0;
 }
