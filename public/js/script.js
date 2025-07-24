@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    // =========================
-    // 🔐 LOGIN VALIDATION
-    // =========================
+
+    // LOGIN VALIDATION 
+
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
         const username = document.getElementById("username");
@@ -46,10 +46,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // =========================
-    // 📝 REGISTER VALIDATION
-    // =========================
-    const registerForm = document.querySelector("form[action*='/Auth/register']");
+    // REGISTER VALIDATION
+
+    const registerForm = document.getElementById("register-form")
 if (registerForm) {
     const username = document.getElementById("username");
     const email = document.getElementById("email");
@@ -145,9 +144,9 @@ if (registerForm) {
 }
 
 
-    // =========================
-    // 🕓 AUTO HIDE ERRORS
-    // =========================
+
+    // AUTO HIDE ERRORS
+ 
     const errorMessages = document.querySelectorAll('.error-msg');
     errorMessages.forEach(function (errorMsg) {
         if (errorMsg.textContent.trim() !== '') {

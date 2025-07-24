@@ -9,7 +9,7 @@
 <body>
     <div class="login-container">
         <h3>Register Form</h3>
-        <form method="POST" action="<?= BASE_URL ?>/Auth/register">
+        <form method="POST" action="<?= BASE_URL ?>/Auth/register" id="register-form">
 
             <label for="username">Username</label>
             <input type="text" id="username" name="username" value="<?= isset($_POST['username']) ? $_POST['username'] : '' ?>" required>
